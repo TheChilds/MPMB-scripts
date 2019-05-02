@@ -1,0 +1,108 @@
+/*	-INFORMATION-
+	Subject:	Race
+	Effect:		This script adds a player race, called "Werebear".
+                    This is taken from the D&D Beyond website (https://www.dndbeyond.com/characters/races)
+	Code by: TheChilds
+	Date: 2019-04-30 (sheet v13)
+*/
+
+var iFileName = "Werewolf [transcribed by TheChilds].js";
+RequiredSheetVersion(13);
+
+SourceList["HB"] = {
+	name : "Werebear Homebrew: D&D Beyond",
+	abbreviation : "WB:D&DB",
+	group : "D&D Beyond",
+	url : "https://www.dndbeyond.com/characters/races/10435-werebear/",
+	date : "2019/04/30"
+};
+
+
+RaceList["werebear"] = {
+	regExpSearch : /^(?=.*werebear).*$/i,
+	name : "Werebear",
+	sortname : "Werebear",
+	source : ["WB:D&DB"],
+	plural : "Werebears",
+	size : 3,
+	speed : {walk : { spd : 40, enc : 30 } },
+	languageProfs : ["Common", 1],
+	weapons : ["Bite", "Claws"],
+	addarmor : "Tough Hide (Str)",
+	vision : [["Darkvision", 160]],
+	savetxt : { text : ["Half damage from any attacks that aren't non-magical and/or magical"] },
+	dmgres : ["Magical", "Non-Magical"],
+	skills : ["Survival", "Nature", "Intimidation", "Perception", "Stealth"],
+	abilitySave : 1,
+	abilitySaveAlt : 3,
+	age : "Werebears reach adulthood in their late teens and live more than a century.",
+	improvements : "Werebear: +2 Strength, +2 Constitution, +2 Charisma;",
+	scores : [2,0,2,0,0,2],
+	eval : "AddACMisc('Prof', 'Tough Hide (Str)', 'Without armour or shield, my AC is 12 + Strength modifier + Dexterity Modifier + Proficiency bonus')",
+	removeeval : "AddACMisc(0, 'Tough Hide (Str)', 'Without armour or shield, my AC is 12 + Strength modifier + Dexterity Modifier + Proficiency bonus')",
+	features : {
+		"changing form" : {
+			name : "Changing Form",
+			minlevel : 1,
+			usages : 1,
+			recovery : "long rest",
+			action : ["action", " (start/end)"]
+					},
+		"trip attack" : {
+			name : "Trip Attack",
+			minlevel : 1,
+			action : ["bonus action", " (after bite attack)"]
+			},
+		"regeneration" : {
+			name : "Regeneration",
+			minlevel : 1,
+			action : ["action", " (instead of attack)"]
+					}
+			},
+	trait : "Werebear (+1 Strength, +1 Constitution, +1 Charisma).\nAll Werebear traits can be found on the Notes page.",
+	toNotesPage : [{
+			name : "Werebear Traits",
+			note : "\nChanging Form:\n   You can take 1 action to change into your Hybrid or Bear Form. While in Hybrid Form you can wield weapons as normal. While in Bear form you cannot wear armour or wield weapons. You are able to wear certain equipment at the DM's discretion, such as circlets and robes. You can choose to have equipment you are wearing to either merge into your form or be dropped to the ground. You gain no benefit from equipment that is merged into your form.\nRegeneration:\n   You take half damage from any attacks that aren't magical and/or non-magical. At the start of your turn if you haven't been attacked you gain 1d4+ your constitution modifier of health back. You can only gain this benefit if you have at least 1 hit point.\nTracking:\n   You can detect opponents within 15 feet by sense of smell. If the opponent is upwind, the range increases to 40 feet; if downwind, it drops to 5 feet. Strong scents can be detected at twice the ranges noted above. Overpowering scents can be detected at triple normal range. When a creature detects a scent, the exact location of the source is not revealed—only its presence somewhere within range. (All Forms).\nTrip Attack:\n   While in Bear or Hybrid form you can attempt to trip the opponent as a bonus action after a bite attack. The opponent must make a Strength Save equal to 10 + your Strength modifier + your Proficiency Bonus.\nBear Empathy:\n   You can communicate with bears and dire bears. (All forms).\nTough Hide:\n   While you are not wearing any Armour or shields your AC becomes 12+ Strength Modifier+ Dexterity Modifier+ Proficiency Bonus (All Forms).",
+	}],
+};
+
+// Tough Hide
+ArmourList["tough hide"] = {
+	regExpSearch : /^(?=.*tough)(?=.*hide).*$/i,
+	name : "Tough Hide (Str)",
+	minlevel : 1,
+	description : "/n   " + "Without armour or shield, my AC is 12 + Strength modifier + Dexterity Modifier + Proficiency bonus",
+	Tooltip : "Without armour or shield, my AC is 12 + Strength modifier + Dexterity Modifier + Constitution Modifier + Proficiency bonus",
+	source : ["WH:D&DB"],
+	type : "",
+	dex : 0,
+	ac : 12,
+	stealthdis : false,
+	strReq : 0,
+	addMod : true
+	
+};
+
+// Natural Weapons
+WeaponsList["claws"] = {
+	regExpSearch : /^(?=.*claws).*$/i,
+	name : "Claws",
+	source : ["WH:D&DB"],
+	ability : 1,
+	damage : [2, 12, "slashing"],
+	range : "Melee",
+	description : "Can only be used in bear or hybrid form",
+	abilitytodamage : true,
+	monkweapon : true
+};
+WeaponsList["bite"] = {
+	regExpSearch : /^(?=.*bite).*$/i,
+	name : "Bite",
+	source : ["WH:D&DB"],
+	ability : 1,
+	damage : [2, 10, "piercing"],
+	range : "Melee",
+	description : "Can only be used in bear or hybrid form",
+	abilitytodamage : true,
+	monkweapon : true
+};
